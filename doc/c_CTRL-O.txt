@@ -1,0 +1,45 @@
+*c_CTRL-O.txt*	One-shot normal mode for command-line mode
+
+OVERVIEW					*c_CTRL-O-overview*
+
+This plugin introduces a natural analogue to |i_CTRL-O| for command-line mode.
+When partway through writing a command-line or performing an incremental
+search with |c_CTRL-G| and |c_CTRL-T|, you might:
+
+	- Redraw the screen with CTRL-O CTRL-L.
+	- Peek at what function or section you're in with CTRL-O [[.
+	- Peek at the definition for the current match with CTRL-O gd,
+	  CTRL-O gD, CTRL-O [ CTRL-I, etc.
+	- Scroll around with CTRL-O zt, CTRL-O CTRL-D, CTRL-O zL, etc.
+	- Perform a nested search with CTRL-O /{pattern}<CR>, then peek at
+	  subsequent matches with CTRL-O n.
+	- Execute nested command-lines like CTRL-O :se {option}<CR>,
+	  CTRL-O :w<CR>, etc.
+
+MAPPINGS					*c_CTRL-O-mappings*
+
+						*c_CTRL-O*
+CTRL-O		Execute one normal-mode command then return to command-line
+		mode. The command is performed under |textlock|. Works like
+		|i_CTRL-O|.
+
+						*c_CTRL-\_CTRL-O*
+CTRL-\ CTRL-O	Abandon the command-line, go to normal mode without moving
+		the cursor. This differs from |c_CTRL-C| and |c_<CR>| during
+		an incremental search |'incsearch'|, after using |c_CTRL-O|
+		to move the cursor off of the latest match. Specifically,
+			CTRL-C		Jumps to the original cursor position.
+			<CR>		Jumps to the latest match.
+			CTRL-\ CTRL-O	Does not move the cursor.
+		The |jumplist| is updated with the original cursor position.
+
+CTRL-R CTRL-O {motion}				*c_CTRL-R_CTRL-O*
+		Insert {motion} text into the command-line as if typed. The
+		text is also put into the unnamed register.
+
+CTRL-R CTRL-R CTRL-O {motion}			*c_CTRL-R_CTRL-R_CTRL-O*
+		Insert {motion} text into the command-line literally. The
+		text is also put into the unnamed register. Works like
+		|c_CTRL-R_CTRL-O| but inserts the text literally.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
